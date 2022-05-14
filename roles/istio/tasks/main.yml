@@ -1,0 +1,17 @@
+- name: Check Istio installed
+  stat:
+    path: "{{ istio_bin }}"
+  register: _istio_bin
+
+- name: Handle Istio install
+  include_tasks:
+    file: apply.yml
+  when:
+    - not _istio_bin.stat.exists
+
+- name: Handle Istio plugins
+  include_tasks:
+    file: plugins.yml
+  when:
+    - not _istio_bin.stat.exists
+

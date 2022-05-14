@@ -1,0 +1,6 @@
+istio_version: "1.12.7"
+istio_package_name: "istio-{{ istio_version }}-linux-amd64.tar.gz"
+istio_package_url: "https://github.com/istio/istio/releases/download/{{ istio_version }}/{{ istio_package_name }}"
+
+istio_dir: "~/istio"
+istio_bin: "{{ istio_dir }}/istio-{{ istio_version }}/bin/istioctl"

@@ -1,0 +1,6 @@
+- name: Istio install
+  hosts: k8s_master
+  remote_user: vagrant
+
+  roles:
+    - istio

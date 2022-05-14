@@ -1,0 +1,11 @@
+- name: Add Istio plugin prometheus
+  shell: >
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.13/samples/addons/prometheus.yaml
+
+- name: Add Istio plugin grafana
+  shell: >
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.13/samples/addons/grafana.yaml
+
+- name: Add Istio plugin jaeger
+  shell: >
+    kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.13/samples/addons/jaeger.yaml

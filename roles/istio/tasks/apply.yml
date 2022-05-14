@@ -1,0 +1,28 @@
+- name: Create Istio install dir
+  file:
+    path: "{{ istio_dir }}"
+    state: directory
+
+- name: Install Istio
+  unarchive:
+    src: "{{ istio_package_url }}"
+    dest: "{{ istio_dir }}"
+    remote_src: yes
+
+- name: Create temp deployment field
+  tempfile:
+    state: file
+  register: _istio_manifest
+
+- name: Template Isito manifest file
+  template:
+    src: "default.yml"
+    dest: "{{ _istio_manifest.path }}"
+
+- name: Deploy Istio manifest
+  shell: >
+    {{ istio_bin }} manifest apply -y --set profile=default -f "{{ _istio_manifest.path }}" 
+
+- name: Enable Istio sidecar injection
+  shell: >
+    kubectl label namespace default istio-injection=enabled
