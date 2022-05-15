@@ -1,0 +1,30 @@
+- name: Check Sock Shop namespace exist
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Namespace
+    name: sock-shop
+  register: _sock_shop_ns_info
+
+- name: Create Sock Shop namespace
+  kubernetes.core.k8s:
+    name: sock-shop
+    api_version: v1
+    kind: Namespace
+    state: present
+  when:
+    - _sock_shop_ns_info.resources | length == 0
+
+- name: Check Sock Shop namespace exist
+  kubernetes.core.k8s_info:
+    api_version: v1
+    kind: Namespace
+    name: sock-shop
+  register: _sock_shop_ns_info
+
+- name: Enable Istio injection for Sock Shop
+  shell:
+    kubectl label namespace sock-shop istio-injection=enabled
+  when:
+    - _sock_shop_ns_info.resources | length > 0 
+      and _sock_shop_ns_info.resources[0].status.phase == "Active"
+      and not "istio-injection" in _sock_shop_ns_info.resources[0].metadata.labels

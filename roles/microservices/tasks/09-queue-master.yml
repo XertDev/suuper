@@ -1,0 +1,64 @@
+- name: Create queue master deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: queue-master
+        labels:
+          app: queue-master
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: queue-master
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: queue-master
+              version: v1
+          spec:
+            terminationGracePeriodSeconds: 5
+            containers:
+            - name: queue-master
+              image: weaveworksdemos/queue-master:0.3.1
+              env:
+                - name: JAVA_OPTS
+                  value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
+              resources:
+                limits:
+                  cpu: 300m
+                  memory: 500Mi
+                requests:
+                  cpu: 100m
+                  memory: 300Mi
+              ports:
+              - containerPort: 80
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create queue master service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: queue-master
+        annotations:
+          prometheus.io/scrape: 'true'
+        labels:
+          name: queue-master
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: http
+            port: 80
+            targetPort: 80
+        selector:
+          app: queue-master

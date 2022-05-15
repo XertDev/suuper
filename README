@@ -1,0 +1,2 @@
+ansible-galaxy collection install kubernetes.core
+pip3 install kubernetes

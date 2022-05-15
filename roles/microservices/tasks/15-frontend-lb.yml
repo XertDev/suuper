@@ -1,0 +1,17 @@
+- name: Create frontend lb service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: front-end-lb
+        namespace: sock-shop
+      spec:
+        type: LoadBalancer
+        ports:
+          - name: tcp
+            port: 80
+            targetPort: 80
+        selector:
+          app: front-end

@@ -1,0 +1,62 @@
+- name: Create session db deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: session-db
+        labels:
+          app: session-db
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: session-db
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: session-db
+              version: v1
+          spec:
+            terminationGracePeriodSeconds: 5
+            containers:
+            - name: session-db
+              image: redis:alpine
+              ports:
+              - containerPort: 6379
+                name: redis
+              securityContext:
+                capabilities:
+                  drop:
+                    - all
+                  add:
+                    - CHOWN
+                    - SETGID
+                    - SETUID
+                readOnlyRootFilesystem: true
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create session db service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: session-db
+        labels:
+          name: session-db
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: tcp
+            port: 6379
+            targetPort: 6379
+        selector:
+          app: session-db

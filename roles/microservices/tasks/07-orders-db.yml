@@ -1,0 +1,74 @@
+- name: Create orders db deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: orders-db
+        labels:
+          app: orders-db
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: orders-db
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: orders-db
+              version: v1
+          spec:
+            containers:
+            - name: orders-db
+              image: mongo
+              ports:
+                - name: mongo
+                  containerPort: 27017
+              securityContext:
+                capabilities:
+                  drop:
+                    - all
+                  add:
+                    - CHOWN
+                    - SETGID
+                    - SETUID
+                readOnlyRootFilesystem: true
+              volumeMounts:
+                - mountPath: /tmp
+                  name: tmp-volume
+              livenessProbe:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - mongo --port 27018 --eval "rs.status()" | grep -vq "REMOVED"
+                initialDelaySeconds: 45
+                timeoutSeconds: 5
+            volumes:
+              - name: tmp-volume
+                emptyDir:
+                  medium: Memory
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create orders db service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: orders-db
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: tcp
+            port: 27017
+            targetPort: 27017
+        selector:
+          app: orders-db

@@ -1,0 +1,77 @@
+- name: Create rabbitmq deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: rabbitmq
+        labels:
+          app: rabbitmq
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: rabbitmq
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: rabbitmq
+              version: v1
+          spec:
+            terminationGracePeriodSeconds: 5
+            containers:
+            - name: rabbitmq
+              image: rabbitmq:3.6.8-management
+              ports:
+              - containerPort: 15672
+                name: management
+              - containerPort: 5672
+                name: rabbitmq
+              securityContext:
+                capabilities:
+                  drop:
+                    - all
+                  add:
+                    - CHOWN
+                    - SETGID
+                    - SETUID
+                    - DAC_OVERRIDE
+                readOnlyRootFilesystem: true
+            - name: rabbitmq-exporter
+              image: kbudde/rabbitmq-exporter
+              ports:
+                - containerPort: 9090
+                  name: exporter
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create rabbitmq service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: rabbitmq
+        annotations:
+          prometheus.io/scrape: 'true'
+          prometheus.io/port: '9090'
+        labels:
+          name: rabbitmq
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: rabbitmq
+            port: 5672
+            targetPort: 5672
+          - name: tcp
+            port: 9090
+            targetPort: exporter
+            protocol: TCP
+        selector:
+          app: rabbitmq

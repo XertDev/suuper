@@ -3,7 +3,7 @@ pushd `pwd`
 
 cd local_cluster
 
-vagrant up --no-parallel --no-provision
+vagrant up --no-provision
 
 vagrant provision
 

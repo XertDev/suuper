@@ -9,9 +9,35 @@
   when:
     - not _istio_bin.stat.exists
 
+- name: Check Istio installed on kubernetes
+  shell:
+    kubectl get -n istio-system service/istiod -o jsonpath='{.metadata.labels.operator\.istio\.io\/version}'
+  register: _istio_version_deployed
+  failed_when:
+    - _istio_version_deployed.rc != 0 and not "NotFound" in _istio_version_deployed.stderr
+
+- name: Handle Istio deploy
+  include_tasks:
+    file: deploy.yml
+  when:
+    - _istio_bin.stat.exists and "NotFound" in _istio_version_deployed.stderr
+
+- name: Check Istio installed on kubernetes
+  shell:
+    kubectl get -n istio-system service/istiod -o jsonpath='{.metadata.labels.operator\.istio\.io\/version}'
+  register: _istio_version_deployed
+  failed_when:
+    - _istio_version_deployed.rc != 0 and not "NotFound" in _istio_version_deployed.stderr
+
+- name: Check grafana installed
+  shell:
+    kubectl get -n istio-system service/grafana -o jsonpath='{.metadata.labels.app\.kubernetes\.io\/version}'
+  register: _istio_grafana_deployed
+  failed_when:
+    - _istio_grafana_deployed.rc != 0 and not "NotFound" in _istio_grafana_deployed.stderr
+
 - name: Handle Istio plugins
   include_tasks:
     file: plugins.yml
   when:
-    - not _istio_bin.stat.exists
-
+    - _istio_bin.stat.exists and "NotFound" in _istio_grafana_deployed.stderr

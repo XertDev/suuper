@@ -1,0 +1,70 @@
+- name: Create user db deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: user-db
+        labels:
+          app: user-db
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: user-db
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: user-db
+              version: v1
+          spec:
+            terminationGracePeriodSeconds: 5
+            containers:
+            - name: user-db
+              image: weaveworksdemos/user-db:0.3.0
+
+              ports:
+                - name: mongo
+                  containerPort: 27017
+              securityContext:
+                capabilities:
+                  drop:
+                    - all
+                  add:
+                    - CHOWN
+                    - SETGID
+                    - SETUID
+                readOnlyRootFilesystem: true
+              volumeMounts:
+                - mountPath: /tmp
+                  name: tmp-volume
+            volumes:
+              - name: tmp-volume
+                emptyDir:
+                  medium: Memory
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create user db service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: user-db
+        labels:
+          name: user-db
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: tcp
+            port: 27017
+            targetPort: 27017
+        selector:
+          app: user-db

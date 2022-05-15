@@ -1,0 +1,63 @@
+- name: Create namespace
+  include_tasks:
+    file: 00-sock-shops-ns.yml
+
+- name: Create Carts service
+  include_tasks:
+    file: 01-carts.yml
+
+- name: Create Carts DB service
+  include_tasks:
+    file: 02-carts-db.yml
+
+- name: Create Catalogue service
+  include_tasks:
+    file: 03-catalogue.yml
+
+- name: Create Catalogue DB service
+  include_tasks:
+    file: 04-catalogue-db.yml
+
+- name: Create Frontend DB service
+  include_tasks:
+    file: 05-frontend.yml
+
+- name: Create Orders service
+  include_tasks:
+    file: 06-orders.yml
+
+- name: Create Orders DB service
+  include_tasks:
+    file: 07-orders-db.yml
+
+- name: Create Payment service
+  include_tasks:
+    file: 08-payment.yml
+
+- name: Create Queue Master service
+  include_tasks:
+    file: 09-queue-master.yml
+
+- name: Create Rabbitmq service
+  include_tasks:
+    file: 10-rabbitmq.yml
+
+- name: Create Session DB service
+  include_tasks:
+    file: 11-session.yml
+
+- name: Create Shipping service
+  include_tasks:
+    file: 12-shipping.yml
+
+- name: Create User service
+  include_tasks:
+    file: 13-user.yml
+
+- name: Create User DB service
+  include_tasks:
+    file: 14-user-db.yml
+
+- name: Create Frontend LB service
+  include_tasks:
+    file: 15-frontend-lb.yml

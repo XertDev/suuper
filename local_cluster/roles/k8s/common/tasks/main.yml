@@ -17,7 +17,6 @@
     - swap
     - none
 
-
 - name: Configure containerd.conf modules
   template:
     src: etc/modules-load.d/containerd.conf

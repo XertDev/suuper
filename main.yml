@@ -1,6 +1,8 @@
 - name: Istio install
-  hosts: k8s_master
+  hosts: localhost
+  connection: local
   remote_user: vagrant
 
   roles:
     - istio
+    - microservices

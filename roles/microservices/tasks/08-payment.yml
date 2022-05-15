@@ -1,0 +1,82 @@
+- name: Create payment deployment
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: payment
+        labels:
+          app: payment
+          version: v1
+        namespace: sock-shop
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: payment
+            version: v1
+        template:
+          metadata:
+            labels:
+              app: payment
+              version: v1
+          spec:
+            terminationGracePeriodSeconds: 5
+            containers:
+            - name: orders
+              image: weaveworksdemos/payment:0.4.3
+              resources:
+                limits:
+                  cpu: 200m
+                  memory: 200Mi
+                requests:
+                  cpu: 99m
+                  memory: 100Mi
+              ports:
+              - containerPort: 80
+              securityContext:
+                runAsNonRoot: true
+                runAsUser: 10001
+                capabilities:
+                  drop:
+                    - all
+                  add:
+                    - NET_BIND_SERVICE
+                readOnlyRootFilesystem: true
+              livenessProbe:
+                httpGet:
+                  path: /health
+                  port: 80
+                initialDelaySeconds: 300
+                periodSeconds: 3
+              readinessProbe:
+                httpGet:
+                  path: /health
+                  port: 80
+                initialDelaySeconds: 180
+                periodSeconds: 3
+            nodeSelector:
+              beta.kubernetes.io/os: linux
+
+- name: Create payment service
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: payment
+        annotations:
+          prometheus.io/scrape: 'true'
+        labels:
+          name: payment
+        namespace: sock-shop
+      spec:
+        type: ClusterIP
+        ports:
+          - name: http
+            port: 80
+            targetPort: 80
+        selector:
+          app: payment
