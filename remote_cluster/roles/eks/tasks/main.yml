@@ -1,0 +1,59 @@
+- name: Configure eks
+  community.aws.aws_eks_cluster:
+    name: "{{ cluster_name }}"
+    version: "{{ k8s_version }}"
+    role_arn: "{{ role_arn }}"
+    subnets:
+      - "{{ create_subnet_1 }}"
+      - "{{ create_subnet_2 }}"
+    security_groups: "{{ ec2_resource_prefix }}"
+    wait: yes
+  register: create_eks
+
+- name: Configure Worker Nodes
+  ansible.builtin.command: >
+    aws eks create-nodegroup
+    --cluster-name {{ cluster_name }}
+    --nodegroup-name {{ cluster_name }}-nodegroup
+    --disk-size 10
+    --subnets {{ create_subnet_1 }} {{ create_subnet_2 }}
+    --scaling-config minSize=2,maxSize=2,desiredSize=2
+    --instance-types t3.medium
+    --ami-type AL2_x86_64
+    --node-role {{ role_arn }}
+
+- name: Wait for Worker Nodes active
+  ansible.builtin.command: >
+    aws eks wait nodegroup-active
+      --cluster-name {{ cluster_name }}
+      --nodegroup-name {{ cluster_name }}-nodegroup
+  ignore_errors: yes
+
+- name: Gather kubectl credentials
+  ansible.builtin.command: >
+    aws eks update-kubeconfig
+      --name {{ cluster_name }}
+  ignore_errors: yes
+
+- name: Delete Worker Nodes
+  tags: [never, delete]
+  ansible.builtin.command: >
+    aws eks delete-nodegroup
+    --cluster-name {{ cluster_name }}
+    --nodegroup-name {{ cluster_name }}-nodegroup
+  ignore_errors: yes
+
+- name: Wait for Worker Nodes deleted
+  tags: [ never, delete ]
+  ansible.builtin.command: >
+    aws eks wait nodegroup-deleted
+      --cluster-name {{ cluster_name }}
+      --nodegroup-name {{ cluster_name }}-nodegroup
+  ignore_errors: yes
+
+- name: Delete eks
+  tags: [never, delete]
+  community.aws.aws_eks_cluster:
+    name: "{{ cluster_name }}"
+    wait: yes
+    state: absent

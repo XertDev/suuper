@@ -1,0 +1,6 @@
+- name: EKS provision
+  hosts: localhost
+  connection: local
+
+  roles:
+    - eks
