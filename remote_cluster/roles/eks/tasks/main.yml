@@ -17,10 +17,11 @@
     --nodegroup-name {{ cluster_name }}-nodegroup
     --disk-size 10
     --subnets {{ create_subnet_1 }} {{ create_subnet_2 }}
-    --scaling-config minSize=2,maxSize=2,desiredSize=2
-    --instance-types t3.medium
+    --scaling-config minSize=5,maxSize=5,desiredSize=5
+    --instance-types t3.xlarge
     --ami-type AL2_x86_64
     --node-role {{ role_arn }}
+  ignore_errors: yes
 
 - name: Wait for Worker Nodes active
   ansible.builtin.command: >
