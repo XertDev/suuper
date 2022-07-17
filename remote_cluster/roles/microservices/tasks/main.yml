@@ -1,0 +1,20 @@
+- name: Clone train-ticket repo
+  ansible.builtin.git:
+    repo: 'https://github.com/FudanSELab/train-ticket.git'
+    dest: train-ticket
+    depth: 1
+  
+- name: Deploy databases
+  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-istio/ts-deployment-part1.yml
+
+- name: Deploy services
+  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-istio/ts-deployment-part2.yml
+
+- name: Deploy UI
+  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-istio/ts-deployment-part3.yml
+
+- name: Install Istio
+  command: istioctl install --skip-confirmation --set profile=demo
+
+- name: Create Istio gateway
+  command: kubectl apply -f train-ticket/deployment/kubernetes-manifests/k8s-with-istio/trainticket-gateway.yaml
