@@ -4,4 +4,4 @@
 
   roles:
     - eks
-    - microservices
+    - deploy
