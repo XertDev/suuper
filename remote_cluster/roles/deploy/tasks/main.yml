@@ -1,14 +1,14 @@
 - name: Deploy databases
-  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part1.yml
+  command: kubectl create -f deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part1.yml
 
 - name: Deploy services
-  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part2.yml
+  command: kubectl create -f deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part2.yml
 
 - name: Deploy UI
-  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part3.yml
+  command: kubectl create -f deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part3.yml
 
 - name: Install Istio
   command: istioctl install --skip-confirmation --set profile=demo
 
 - name: Create Istio gateway
-  command: kubectl apply -f train-ticket/deployment/kubernetes-manifests/k8s-with-istio/trainticket-gateway.yaml
+  command: kubectl apply -f deployment/kubernetes-manifests/k8s-with-istio/trainticket-gateway.yaml

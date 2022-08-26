@@ -1,7 +1,7 @@
 cluster_name: "Suuper_cluster"
 k8s_version: "1.22"
-role_arn: arn:aws:iam::296431750001:role/LabRole
+role_arn: arn:aws:iam::999611413509:role/LabRole
 wait: true
-create_subnet_1: "subnet-0bace01133b20ceb3"
-create_subnet_2: "subnet-06ef43f62dc701fc8"
-ec2_resource_prefix: "sg-095fc304842688f83"
+create_subnet_1: "subnet-0aeb095c1509e2d94"
+create_subnet_2: "subnet-069ab70b67451e301"
+ec2_resource_prefix: "sg-0a521e5640e9566c0"
