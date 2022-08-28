@@ -7,6 +7,12 @@
 - name: Deploy UI
   command: kubectl create -f deployment/kubernetes-manifests/k8s-with-jaeger/ts-deployment-part3.yml
 
+- name: Deploy MongoDB exporters
+  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/prometheus/mongodb-exporter.yml
+
+- name: Deploy Prometheus
+  command: kubectl create -f train-ticket/deployment/kubernetes-manifests/prometheus/prometheus.yml
+
 - name: Install Istio
   command: istioctl install --skip-confirmation --set profile=demo
 

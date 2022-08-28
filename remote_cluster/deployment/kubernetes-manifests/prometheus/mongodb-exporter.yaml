@@ -1,0 +1,342 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-user-mongo-exporter
+  labels:
+    k8s-app: ts-user-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-user-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-user-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-user-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-user-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-user-mongo-exporter
+  labels:
+    k8s-app: ts-user-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-user-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-auth-mongo-exporter
+  labels:
+    k8s-app: ts-auth-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-auth-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-auth-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-auth-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-auth-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-auth-mongo-exporter
+  labels:
+    k8s-app: ts-auth-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-auth-mongo-exporter
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-contacts-mongo-exporter
+  labels:
+    k8s-app: ts-contacts-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-contacts-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-contacts-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-contacts-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-contacts-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-contacts-mongo-exporter
+  labels:
+    k8s-app: ts-contacts-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-contacts-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-travel-mongo-exporter
+  labels:
+    k8s-app: ts-travel-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-travel-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-travel-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-travel-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-travel-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-travel-mongo-exporter
+  labels:
+    k8s-app: ts-travel-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-travel-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-assurance-mongo-exporter
+  labels:
+    k8s-app: ts-assurance-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-assurance-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-assurance-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-assurance-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-assurance-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-assurance-mongo-exporter
+  labels:
+    k8s-app: ts-assurance-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-assurance-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-food-mongo-exporter
+  labels:
+    k8s-app: ts-food-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-food-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-food-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-food-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-food-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-food-mongo-exporter
+  labels:
+    k8s-app: ts-food-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-food-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-order-mongo-exporter
+  labels:
+    k8s-app: ts-order-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-order-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-order-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-order-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-order-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-order-mongo-exporter
+  labels:
+    k8s-app: ts-order-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-order-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-inside-payment-mongo-exporter
+  labels:
+    k8s-app: ts-inside-payment-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-inside-payment-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-inside-payment-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-inside-payment-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-inside-payment-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-inside-payment-mongo-exporter
+  labels:
+    k8s-app: ts-inside-payment-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-inside-payment-mongo-exporter
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-consign-mongo-exporter
+  labels:
+    k8s-app: ts-consign-mongo-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: ts-consign-mongo-exporter
+  template:
+    metadata:
+      labels:
+        k8s-app: ts-consign-mongo-exporter
+    spec:
+      containers:
+        - image: percona/mongodb_exporter:0.34.0
+          name: ts-consign-mongo-exporter
+          ports:
+          - containerPort: 9216
+          args: ["--mongodb.uri=mongodb://ts-consign-mongo:27017", "--collector.diagnosticdata", "--collector.topmetrics"]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ts-consign-mongo-exporter
+  labels:
+    k8s-app: ts-consign-mongo-exporter
+spec:
+  ports:
+  - port: 9216
+    protocol: TCP
+  type: NodePort
+  selector:
+    k8s-app: ts-consign-mongo-exporter
+---
