@@ -1010,3 +1010,22 @@ spec:
   selector:
     app.kubernetes.io/name: jaeger
     app.kubernetes.io/component: all-in-one
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger-query-public
+  labels:
+    app: jaeger
+spec:
+  type: LoadBalancer
+  ports:
+    - name: query-http
+      port: 8080
+      targetPort: 16686
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: jaeger
+    app.kubernetes.io/component: all-in-one
