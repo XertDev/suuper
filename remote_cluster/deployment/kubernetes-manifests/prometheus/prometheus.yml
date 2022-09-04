@@ -1,0 +1,109 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval:     15s
+      evaluation_interval: 15s
+    scrape_configs:
+    - job_name: 'ts-user-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-user-mongo-exporter:9216']
+    - job_name: 'ts-auth-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-auth-mongo-exporter:9216']
+    - job_name: 'ts-contacts-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-contacts-mongo-exporter:9216']
+    - job_name: 'ts-travel-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-travel-mongo-exporter:9216']
+    - job_name: 'ts-assurance-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-assurance-mongo-exporter:9216']
+    - job_name: 'ts-food-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-food-mongo-exporter:9216']
+    - job_name: 'ts-order-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-order-mongo-exporter:9216']
+    - job_name: 'ts-inside-payment-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-inside-payment-mongo-exporter:9216']
+    - job_name: 'ts-consign-mongo-exporter'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-consign-mongo-exporter:9216']
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    name: prometheus-deployment
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - image: prom/prometheus:v2.0.0
+        name: prometheus
+        command:
+        - "/bin/prometheus"
+        args:
+        - "--config.file=/etc/prometheus/prometheus.yml"
+        - "--storage.tsdb.path=/prometheus"
+        - "--storage.tsdb.retention=24h"
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        volumeMounts:
+        - mountPath: "/prometheus"
+          name: data
+        - mountPath: "/etc/prometheus"
+          name: config-volume
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            cpu: 500m
+            memory: 2500Mi
+      # serviceAccountName: prometheus    
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: config-volume
+        configMap:
+          name: prometheus-config      
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9090
+    targetPort: 9090
+    nodePort: 30004
+  selector:
+    app: prometheus
