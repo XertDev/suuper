@@ -2,5 +2,6 @@
 istio/
 remote_cluster/train-ticket
 
-metrics.csv
+raw_metrics.csv
+predefined_metrics.csv
 poetry.lock

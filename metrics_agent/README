@@ -22,7 +22,12 @@ cd metrics_agent
 ```shell
 poetry install
 ``` 
-### Run the exporter!
+### Run the exporter in two modes!
+1. Get predefined metrics as in above:
 ```shell
-poetry run python exporter.py [Your Prometheus endpoint]
+poetry run python exporter.py [Your Prometheus endpoint:port]
+```
+2. Get the metrics of your choice
+```shell
+poetry run python exporter.py [Your Prometheus endpoint:port] [comma separated metrics]
 ```
