@@ -51,3 +51,37 @@ kubectl get svc prometheus --output jsonpath='{.status.loadBalancer.ingress[0].h
 ```bash
 ./stop_aws_cluster.sh 
 ```
+
+# Exporter
+
+## What metrics are in Exporter:
+- ### timestamp
+- ### instance
+- ### active_connections - See [documentation](https://www.mongodb.com/docs/manual/reference/command/serverStatus/#connections)
+- ### available_connections
+- ### current_connections
+- ### total_created_connections
+- ### total_operations_counter - See [documentation](https://www.mongodb.com/docs/manual/reference/command/serverStatus/#opcounters)
+- ### total_queries_counter - See [documentation](https://www.mongodb.com/docs/manual/reference/command/top/#mongodb-dbcommand-dbcmd.top)
+- ### total_queries_time
+
+
+## How to use Exporter
+### To run exporter in virtual environment first install [Poetry](https://python-poetry.org/docs/#installation)
+### Change the directory into /metrics_agent 
+```shell
+cd metrics_agent
+``` 
+### Install the environment
+```shell
+poetry install
+``` 
+### Run the exporter in two modes!
+1. Get predefined metrics as in above:
+```shell
+poetry run python exporter.py [Your Prometheus endpoint:port]
+```
+2. Get the metrics of your choice
+```shell
+poetry run python exporter.py [Your Prometheus endpoint:port] [comma separated metrics]
+```
