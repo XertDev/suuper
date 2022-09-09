@@ -1,3 +1,7 @@
 .idea/
 istio/
 remote_cluster/train-ticket
+
+raw_metrics.csv
+predefined_metrics.csv
+poetry.lock
