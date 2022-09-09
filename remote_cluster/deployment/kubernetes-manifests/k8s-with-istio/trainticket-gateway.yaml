@@ -375,11 +375,3 @@ spec:
         host: ts-admin-user-service
         port:
           number: 16115
-  - match:
-      - uri:
-          prefix: /
-    route:
-      - destination:
-          host: kafka
-          port:
-            number: 16116
