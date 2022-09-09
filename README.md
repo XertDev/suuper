@@ -7,6 +7,16 @@ ansible-galaxy collection install kubernetes.core
 pip3 install kubernetes
 ```
 
+Update the following parameter in the configuration file `remote_cluster/roles/eks/defaults/main.yml`
+* role_arn
+* create_subnet_1
+* create_subnet_2
+* ec2_resource_prefix
+
+and update `~/.aws/credentials` with your credential to AWS.
+
+### Deploy application
+
 ```bash
 ./start_aws_cluster.sh
 ```
@@ -40,11 +50,15 @@ $ kubectl get svc istio-ingressgateway -n istio-system  --output jsonpath='{.sta
 kubectl get svc jaeger-query-public --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 ```
 
+Jaeger is hosted at the port `8080`
+
 ## Get Prometheus url
 
 ```bash
 kubectl get svc prometheus --output jsonpath='{.status.loadBalancer.ingress[0].hostname}'
 ```
+
+Prometheus is hosted at the port `9090`
 
 ## How to stop aws cluster
 
