@@ -57,7 +57,7 @@ kubectl get svc prometheus --output jsonpath='{.status.loadBalancer.ingress[0].h
 ## What metrics are in Exporter:
 - ### timestamp
 - ### instance
-- ### active_connections - - See [documentation](https://www.mongodb.com/docs/manual/reference/command/serverStatus/#connections)
+- ### active_connections - See [documentation](https://www.mongodb.com/docs/manual/reference/command/serverStatus/#connections)
 - ### available_connections
 - ### current_connections
 - ### total_created_connections
