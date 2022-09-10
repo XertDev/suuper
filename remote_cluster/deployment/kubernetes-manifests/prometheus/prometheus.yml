@@ -44,6 +44,186 @@ data:
       scrape_interval: 15s
       static_configs:
         - targets: ['ts-consign-mongo-exporter:9216']
+    - job_name: 'ts-config-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-config-service:15679']
+    - job_name: 'ts-auth-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-auth-service:12340']
+    - job_name: 'ts-verification-code-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-verification-code-service:15678']
+    - job_name: 'ts-station-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-station-service:12345']
+    - job_name: 'ts-train-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-train-service:14567']
+    - job_name: 'ts-security-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-security-service:11188']
+    - job_name: 'ts-execute-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-execute-service:12386']
+    - job_name: 'ts-contacts-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-contacts-service:12347']
+    - job_name: 'ts-order-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-order-service:12031']
+    - job_name: 'ts-order-other-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-order-other-service:12032']
+    - job_name: 'ts-travel-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-travel-service:12346']
+    - job_name: 'ts-travel2-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-travel2-service:16346']
+    - job_name: 'ts-preserve-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-preserve-service:14568']
+    - job_name: 'ts-preserve-other-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-preserve-other-service:14569']
+    - job_name: 'ts-price-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-price-service:16579']
+    - job_name: 'ts-basic-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-basic-service:15680']
+    - job_name: 'ts-ticketinfo-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-ticketinfo-service:15681']
+    - job_name: 'ts-notification-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-notification-service:17853']
+    - job_name: 'ts-inside-payment-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-inside-payment-service:18673']
+    - job_name: 'ts-payment-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-payment-service:19001']
+    - job_name: 'ts-rebook-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-rebook-service:18886']
+    - job_name: 'ts-cancel-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-cancel-service:18885']
+    - job_name: 'ts-route-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-route-service:11178']
+    - job_name: 'ts-assurance-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-assurance-service:18888']
+    - job_name: 'ts-ticket-office-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-ticket-office-service:16108']
+    - job_name: 'ts-travel-plan-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-travel-plan-service:14322']
+    - job_name: 'ts-consign-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-consign-service:16111']
+    - job_name: 'ts-consign-price-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-consign-price-service:16110']
+    - job_name: 'ts-voucher-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-voucher-service:16101']
+    - job_name: 'ts-route-plan-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-route-plan-service:14578']
+    - job_name: 'ts-food-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-food-service:18856']
+    - job_name: 'ts-admin-basic-info-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-admin-basic-info-service:18767']
+    - job_name: 'ts-admin-order-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-admin-order-service:16112']
+    - job_name: 'ts-admin-route-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-admin-route-service:16113']
+    - job_name: 'ts-admin-travel-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-admin-travel-service:16114']
+    - job_name: 'ts-admin-user-service-actuator'
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 15s
+      static_configs:
+        - targets: ['ts-admin-user-service:16115']
 ---
 apiVersion: apps/v1
 kind: Deployment
