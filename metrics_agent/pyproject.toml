@@ -2,7 +2,6 @@
 name = "suuper"
 version = "0.1.0"
 description = ""
-authors = ["Ilargi12 <bplewnia99@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
