@@ -33,6 +33,7 @@ pip install locust
 
 ```bash
 git clone https://github.com/pptam/pptam-tool
+git checkout dd44cb917c3b1d1d6f5ec03ef3d57c2df4efb688 `# There is some regression on master branch, so we checkout to latest working version`
 cd design_trainticket
 locust -f locustfile.py
 ```
