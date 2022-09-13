@@ -73,7 +73,7 @@ def export_predefined_metrics():
             instances_with_values = get_instances_with_query_result(q.query)
 
             save_metrics_to_file(filename="predefined_"+q.name, metrics=instances_with_values)
-        time.sleep(24 * 3600)
+        time.sleep(3600)
 
 
 SKIPPED_FIELDS = ["__name__", "job", "cl_id", "cl_role"]
